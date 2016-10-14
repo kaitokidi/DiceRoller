@@ -1,20 +1,20 @@
 #include "Portada.hpp"
 
 
-    Portada::Portada() {
-        open = true;
-    }
-    
-    Portada::~Portada(){}
-    
-    void Portada::display(sf::RenderWindow* window){
-        open = true;
-        wantAnimation = true;
-        while(open){
-            
-            sf::Event event;
-            while (window->pollEvent(event)) {
-                switch (event.type) {
+Portada::Portada() {
+    open = true;
+}
+
+Portada::~Portada(){}
+
+void Portada::display(sf::RenderWindow* window){
+    open = true;
+    wantAnimation = true;
+    while(open){
+
+        sf::Event event;
+        while (window->pollEvent(event)) {
+            switch (event.type) {
                 case sf::Event::Closed:
                     window->close();
                     exit(0);
@@ -28,40 +28,40 @@
                     }
                 default:
                     break;
-                }
             }
-
-            t.loadFromFile("res/Portada.png");
-            s.setTexture(t);
-            s.scale(window->getSize().y/s.getGlobalBounds().height,window->getSize().y/s.getGlobalBounds().height);
-            s.setPosition(window->getSize().x/2 - s.getGlobalBounds().width/2, 0);
-            window->draw(s);
-
-            window->display();
-                
         }
-        
+
+        t.loadFromFile("res/Portada.png");
+        s.setTexture(t);
+        s.scale(window->getSize().y/s.getGlobalBounds().height,window->getSize().y/s.getGlobalBounds().height);
+        s.setPosition(window->getSize().x/2 - s.getGlobalBounds().width/2, 0);
+        window->draw(s);
+
+        window->display();
+
     }
-    
-    void Portada::notAnimation(){
-        wantAnimation = false;
-    }
-    void Portada::animation(){
-        wantAnimation = true;
-    }
-    
-    void Portada::display(sf::RenderWindow* window, std::string pathImage){
-        open = true;
-            t.loadFromFile(pathImage);
-            s = sf::Sprite();
-            s.setTexture(t);
-            s.scale(window->getSize().y/s.getGlobalBounds().height,window->getSize().y/s.getGlobalBounds().height);
-            s.setPosition(window->getSize().x/2 - s.getGlobalBounds().width/2, 0);
-        while(open){
-            
-            sf::Event event;
-            while (window->pollEvent(event)) {
-                switch (event.type) {
+
+}
+
+void Portada::notAnimation(){
+    wantAnimation = false;
+}
+void Portada::animation(){
+    wantAnimation = true;
+}
+
+void Portada::display(sf::RenderWindow* window, std::string pathImage){
+    open = true;
+    t.loadFromFile(pathImage);
+    s = sf::Sprite();
+    s.setTexture(t);
+    s.scale(window->getSize().y/s.getGlobalBounds().height,window->getSize().y/s.getGlobalBounds().height);
+    s.setPosition(window->getSize().x/2 - s.getGlobalBounds().width/2, 0);
+    while(open){
+
+        sf::Event event;
+        while (window->pollEvent(event)) {
+            switch (event.type) {
                 case sf::Event::Closed:
                     window->close();
                     break;
@@ -75,44 +75,44 @@
                     break;
                 default:
                     break;
-                }
-                //ANDROID
-//                     if(event.type == sf::Event::TouchEnded)  open = false;
-//                     break;
             }
-
-            window->clear();
-            window->draw(s);
-
-            window->display();
-                
+            //ANDROID
+            //                     if(event.type == sf::Event::TouchEnded)  open = false;
+            //                     break;
         }
-        
-        sf::Clock timer;
-        sf::Sprite dark;
-        sf::Texture text;
-        bool closing = true;
-        text.loadFromFile("res/pics/black.png");
-        
-        dark.setTexture(text);
-        dark.setOrigin(dark.getLocalBounds().width/2,dark.getLocalBounds().height/2);
-        dark.setPosition(window->getSize().x/2,window->getSize().y/2);
-        float scale = 1/dark.getGlobalBounds().width;;
-        
-        float time = 0;
-        while(closing and wantAnimation){            
-            dark.setScale(scale,scale);
-            time += timer.restart().asSeconds();
-            if(time > 0.1){
-                scale *= 1.5;
-                time = 0;
-            }
-            window->clear();
-            window->draw(s);
-            window->draw(dark);
-            window->display();
-            if(dark.getGlobalBounds().width > window->getSize().x) closing = false;
-        }
-        //clean events 
-        sf::Event e; while (window->pollEvent(e)) { }
+
+        window->clear();
+        window->draw(s);
+
+        window->display();
+
     }
+
+    sf::Clock timer;
+    sf::Sprite dark;
+    sf::Texture text;
+    bool closing = true;
+    text.loadFromFile("res/pics/black.png");
+
+    dark.setTexture(text);
+    dark.setOrigin(dark.getLocalBounds().width/2,dark.getLocalBounds().height/2);
+    dark.setPosition(window->getSize().x/2,window->getSize().y/2);
+    float scale = 1/dark.getGlobalBounds().width;;
+
+    float time = 0;
+    while(closing and wantAnimation){
+        dark.setScale(scale,scale);
+        time += timer.restart().asSeconds();
+        if(time > 0.1){
+            scale *= 1.5;
+            time = 0;
+        }
+        window->clear();
+        window->draw(s);
+        window->draw(dark);
+        window->display();
+        if(dark.getGlobalBounds().width > window->getSize().x) closing = false;
+    }
+    //clean events
+    sf::Event e; while (window->pollEvent(e)) { }
+}
